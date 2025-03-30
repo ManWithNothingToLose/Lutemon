@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:gravity="center_horizontal">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Lutemon Game"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="32dp" />
+
+    <Button
+        android:id="@+id/buttonCreate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create Lutemon"
+        android:layout_marginBottom="12dp" />
+
+    <Button
+        android:id="@+id/buttonList"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View Lutemons"
+        android:layout_marginBottom="12dp" />
+
+    <Button
+        android:id="@+id/buttonMove"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Move Lutemons"
+        android:layout_marginBottom="12dp" />
+
+    <Button
+        android:id="@+id/buttonTrain"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Train Lutemons"
+        android:layout_marginBottom="12dp" />
+
+    <Button
+        android:id="@+id/buttonBattle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Battle!"
+        android:layout_marginBottom="12dp" />
+</LinearLayout>
