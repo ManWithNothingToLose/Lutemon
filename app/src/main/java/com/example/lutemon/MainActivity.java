@@ -2,46 +2,64 @@ package com.example.lutemon;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
-
+import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 
 public class MainActivity extends AppCompatActivity {
+
+    private TextView textHomeCount, textTrainingCount, textBattleCount;
+    private CardView cardCreate, cardHome, cardTraining, cardBattle, cardStats;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button buttonCreate = findViewById(R.id.buttonCreate);
-        Button buttonList = findViewById(R.id.buttonList);
-        Button buttonMove = findViewById(R.id.buttonMove);
-        Button buttonTrain = findViewById(R.id.buttonTrain);
-        Button buttonBattle = findViewById(R.id.buttonBattle);
+        // Load saved data
+        Storage.getInstance().loadData(this);
 
-        buttonCreate.setOnClickListener(v -> {
-            Intent intent = new Intent(this, CreateLutemonActivity.class);
-            startActivity(intent);
-        });
+        // Link TextViews
+        textHomeCount = findViewById(R.id.textHomeCount);
+        textTrainingCount = findViewById(R.id.textTrainingCount);
+        textBattleCount = findViewById(R.id.textBattleCount);
 
-        buttonList.setOnClickListener(v -> {
-            Intent intent = new Intent(this, ListLutemonActivity.class);
-            startActivity(intent);
-        });
+        // Link CardViews
+        cardCreate = findViewById(R.id.cardCreate);
+        cardHome = findViewById(R.id.cardHome);
+        cardTraining = findViewById(R.id.cardTraining);
+        cardBattle = findViewById(R.id.cardBattle);
+        cardStats = findViewById(R.id.cardStats);
 
-        buttonMove.setOnClickListener(v -> {
-            Intent intent = new Intent(this, MoveLutemonActivity.class);
-            startActivity(intent);
-        });
+        // Card click listeners
+        cardCreate.setOnClickListener(v -> startActivity(new Intent(this, CreateLutemonActivity.class)));
+        cardHome.setOnClickListener(v -> startActivity(new Intent(this, HomeActivity.class)));
+        cardTraining.setOnClickListener(v -> startActivity(new Intent(this, TrainingListActivity.class)));
+        cardBattle.setOnClickListener(v -> startActivity(new Intent(this, BattleActivity.class)));
+        cardStats.setOnClickListener(v -> startActivity(new Intent(this, StatsActivity.class)));
+    }
 
-        buttonTrain.setOnClickListener(v -> {
-            Intent intent = new Intent(this, TrainLutemonActivity.class);
-            startActivity(intent);
-        });
+    @Override
+    protected void onResume() {
+        super.onResume();
+        updateCounts();
+    }
 
-        buttonBattle.setOnClickListener(v -> {
-            Intent intent = new Intent(this, BattleActivity.class);
-            startActivity(intent);
-        });
+    private void updateCounts() {
+        textHomeCount.setText(String.valueOf(Storage.getInstance().getHomeLutemons().size()));
+        textTrainingCount.setText(String.valueOf(Storage.getInstance().getTrainingLutemons().size()));
+        textBattleCount.setText(String.valueOf(Storage.getInstance().getBattleLutemons().size()));
+    }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Storage.getInstance().saveData(this);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Storage.getInstance().saveData(this);
     }
 }

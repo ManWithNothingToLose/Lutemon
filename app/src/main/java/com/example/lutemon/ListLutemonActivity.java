@@ -15,13 +15,15 @@ public class ListLutemonActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_lutemons);
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         recyclerView = findViewById(R.id.recyclerViewLutemons);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        ArrayList<Lutemon> lutemons = new ArrayList<>(Storage.getInstance().getAllLutemons().values());
-        adapter = new LutemonAdapter(lutemons);
+        ArrayList<Lutemon> all = new ArrayList<>(Storage.getInstance().getAllLutemons().values());
+        adapter = new LutemonAdapter(all, "All", this);
+
         recyclerView.setAdapter(adapter);
+
     }
 }

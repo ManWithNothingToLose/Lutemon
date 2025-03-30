@@ -1,5 +1,6 @@
 package com.example.lutemon;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -27,6 +28,7 @@ public class MoveLutemonActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_move_lutemon);
+        
 
         spinnerSource = findViewById(R.id.spinnerSource);
         spinnerTarget = findViewById(R.id.spinnerTarget);
@@ -65,7 +67,7 @@ public class MoveLutemonActivity extends AppCompatActivity {
                 return;
             }
 
-            moveLutemon(selected, target);
+            moveLutemon(selected, target,this);
             Toast.makeText(this, selected.getName() + " moved to " + target, Toast.LENGTH_SHORT).show();
             updateListView(getLutemonsFrom(source));
         });
@@ -80,18 +82,29 @@ public class MoveLutemonActivity extends AppCompatActivity {
         }
     }
 
-    private void moveLutemon(Lutemon l, String targetArea) {
+    private void moveLutemon(Lutemon l, String targetArea, Context context) {
         switch (targetArea) {
-            case "Home": Storage.getInstance().moveToHome(l); break;
-            case "Training": Storage.getInstance().moveToTraining(l); break;
-            case "Battle": Storage.getInstance().moveToBattle(l); break;
+            case "Home":
+                Storage.getInstance().moveToHome(l, context);
+                break;
+            case "Training":
+                Storage.getInstance().moveToTraining(l, context);
+                break;
+            case "Battle":
+                Storage.getInstance().moveToBattle(l, context);
+                break;
         }
     }
 
+
     private void updateListView(ArrayList<Lutemon> list) {
-        currentList = list;
+        currentList = new ArrayList<>(list);
         listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_single_choice, currentList);
         listView.setAdapter(listAdapter);
         listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        listView.clearChoices();
+        listAdapter.notifyDataSetChanged();
     }
+
+
 }

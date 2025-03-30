@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class TrainLutemonActivity extends AppCompatActivity {
+
     private RecyclerView recyclerView;
     private LutemonAdapter adapter;
     private Button buttonTrainAll;
@@ -25,7 +26,8 @@ public class TrainLutemonActivity extends AppCompatActivity {
         buttonTrainAll = findViewById(R.id.buttonTrainAll);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        updateAdapter();
+
+        loadTrainingLutemons();
 
         buttonTrainAll.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,7 +36,7 @@ public class TrainLutemonActivity extends AppCompatActivity {
 
                 if (trainingLutemons.isEmpty()) {
                     Toast.makeText(TrainLutemonActivity.this, "No Lutemons to train!", Toast.LENGTH_SHORT).show();
-                    return; // Exit the onClick method early
+                    return;
                 }
 
                 for (Lutemon lutemon : trainingLutemons) {
@@ -42,14 +44,20 @@ public class TrainLutemonActivity extends AppCompatActivity {
                 }
 
                 Toast.makeText(TrainLutemonActivity.this, "Lutemons trained!", Toast.LENGTH_SHORT).show();
-                updateAdapter();
+                loadTrainingLutemons(); // Refresh the list with updated XP
             }
         });
     }
 
-    private void updateAdapter() {
+    private void loadTrainingLutemons() {
         ArrayList<Lutemon> trainingLutemons = Storage.getInstance().getTrainingLutemons();
-        adapter = new LutemonAdapter(trainingLutemons);
+        adapter = new LutemonAdapter(trainingLutemons, "Training", this);
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadTrainingLutemons(); // Refresh list when returning to this screen
     }
 }

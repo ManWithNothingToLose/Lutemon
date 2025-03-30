@@ -1,39 +1,154 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
+    android:background="#FAF7FF"
     android:padding="16dp">
 
-    <Spinner
-        android:id="@+id/spinnerLutemon1"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="59dp"
-        android:layout_marginBottom="8dp" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
 
-    <Spinner
-        android:id="@+id/spinnerLutemon2"
-        android:layout_width="match_parent"
-        android:layout_height="67dp"
-        android:layout_marginBottom="8dp" />
-
-    <Button
-        android:id="@+id/buttonStartBattle"
-        android:layout_width="match_parent"
-        android:layout_height="97dp"
-        android:layout_marginBottom="8dp"
-        android:text="Start Battle" />
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
-
+        <!-- Title -->
         <TextView
-            android:id="@+id/textViewBattleLog"
+            android:id="@+id/textBattleTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="BATTLE"
+            android:textStyle="bold"
+            android:textSize="22sp"
+            android:textColor="#4A148C"
+            android:layout_marginBottom="8dp" />
+
+        <!-- Instructions -->
+        <TextView
+            android:id="@+id/textBattleInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select 2 Lutemons from the list below to begin the fight."
+            android:textColor="#555555"
+            android:layout_marginBottom="12dp" />
+
+        <!-- Lutemon List -->
+        <ListView
+            android:id="@+id/listBattleLutemons"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginBottom="16dp"
+            android:divider="@android:color/darker_gray"
+            android:dividerHeight="1dp"
+            android:choiceMode="multipleChoice" />
+
+        <!-- Buttons -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp" />
-    </ScrollView>
-</LinearLayout>
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="16dp"
+            android:weightSum="3">
+
+            <Button
+                android:id="@+id/buttonFight"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Fight!"
+                android:backgroundTint="#7E57C2"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/buttonNextAttack"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Next"
+                android:enabled="false"
+                android:layout_marginStart="8dp"
+                android:backgroundTint="#5E35B1"
+                android:textColor="#FFFFFF" />
+
+            <Button
+                android:id="@+id/buttonResetBattle"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="Reset"
+                android:layout_marginStart="8dp"
+                android:backgroundTint="#B71C1C"
+                android:textColor="#FFFFFF" />
+        </LinearLayout>
+
+        <!-- Fighter Images + HP Bars -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/imageLutemon1"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginBottom="4dp"
+                    android:contentDescription="Lutemon 1" />
+
+                <ProgressBar
+                    android:id="@+id/progressHP1"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="100dp"
+                    android:layout_height="10dp"
+                    android:progress="100"
+                    android:max="100"
+                    android:progressTint="#FF5252" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/imageLutemon2"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
+                    android:layout_marginBottom="4dp"
+                    android:contentDescription="Lutemon 2" />
+
+                <ProgressBar
+                    android:id="@+id/progressHP2"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="100dp"
+                    android:layout_height="10dp"
+                    android:progress="100"
+                    android:max="100"
+                    android:progressTint="#FF5252" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Battle Log -->
+        <TextView
+            android:id="@+id/textResult"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:background="#EEEEEE"
+            android:padding="12dp"
+            android:textColor="#000000"
+            android:textSize="14sp"
+            android:scrollbars="vertical"
+            android:text=""
+            android:gravity="top" />
+    </LinearLayout>
+</ScrollView>
