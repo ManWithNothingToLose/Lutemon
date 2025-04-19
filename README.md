@@ -1,5 +1,7 @@
 # Lutemon Battle – Final Report  
-**Author:** *Solo project – no team‑mates*  
+**Author:** Ahmed Baran ALMAS 
+**Student Number:** 2432744
+**Email Adress:** baran.almas@student.lut.fi
 **Date:** 15 April 2025  
 
 ---
