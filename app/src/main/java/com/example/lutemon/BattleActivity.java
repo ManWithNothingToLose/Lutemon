@@ -32,6 +32,13 @@ public class BattleActivity extends AppCompatActivity {
     private int round = 1;
     private boolean battleInProgress = false;
 
+    private int applyRandomness(int baseDamage) {
+        double variance = 0.2; // ±20% variability
+        double factor = 1 + (Math.random() * 2 * variance - variance); // Range [0.8, 1.2]
+        return Math.max(0, (int) Math.round(baseDamage * factor));
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -111,7 +118,9 @@ public class BattleActivity extends AppCompatActivity {
         StringBuilder log = new StringBuilder(textResult.getText());
         log.append("Round ").append(round).append(":\n");
 
-        int damageTo2 = Math.max(0, fighter1.getAttack() - fighter2.getDefense());
+        // Fighter 1 attacks Fighter 2
+        int baseDamageTo2 = Math.max(0, fighter1.getAttack() - fighter2.getDefense());
+        int damageTo2 = applyRandomness(baseDamageTo2);
         boolean f2Fainted = fighter2.takeDamage(damageTo2);
         log.append(fighter1.getName()).append(" attacks ").append(fighter2.getName())
                 .append(" for ").append(damageTo2).append(" dmg.\n");
@@ -131,7 +140,9 @@ public class BattleActivity extends AppCompatActivity {
             return;
         }
 
-        int damageTo1 = Math.max(0, fighter2.getAttack() - fighter1.getDefense());
+        // Fighter 2 attacks Fighter 1
+        int baseDamageTo1 = Math.max(0, fighter2.getAttack() - fighter1.getDefense());
+        int damageTo1 = applyRandomness(baseDamageTo1);
         boolean f1Fainted = fighter1.takeDamage(damageTo1);
         log.append(fighter2.getName()).append(" attacks ").append(fighter1.getName())
                 .append(" for ").append(damageTo1).append(" dmg.\n");
@@ -152,6 +163,7 @@ public class BattleActivity extends AppCompatActivity {
         textResult.setText(log.toString());
         fadeInLogEntry();
     }
+
 
     private void loadLutemons() {
         battleLutemons = Storage.getInstance().getBattleLutemons();
